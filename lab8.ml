@@ -160,19 +160,24 @@ and publish the headlines. *)
 Exercise 4: Given your implementation of Event, create a new event
 called "newswire" that should pass strings to the event handlers.
 ......................................................................*)
-
-let newswire = fun _ -> failwith "newswire not implemented" ;;
-
-(* News organizations might want to register event listeners to the
-newswire so that they might report on stories. Below are functions
-for two organizations that accept headlines and "publish" stories (to
-stdout) in different ways. *)
+let newswire = WEvent.new_event () ;;
 
 let fakeNewsNetwork (s : string) : unit =
   Printf.printf "BREAKING NEWS %s\n" s ;;
 
 let buzzFake (s : string) : unit =
   Printf.printf "YOU'LL NEVER BELIEVE %s\n" s ;;
+
+WEvent.add_listener newswire fakeNewsNetwork;;
+
+WEvent.add_listener newswire buzzFake ;;
+
+
+(* News organizations might want to register event listeners to the
+newswire so that they might report on stories. Below are functions
+for two organizations that accept headlines and "publish" stories (to
+stdout) in different ways. *)
+
 
 (*......................................................................
 Exercise 5: Register these two news organizations as listeners to the
